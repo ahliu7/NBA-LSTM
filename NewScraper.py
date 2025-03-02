@@ -18,13 +18,7 @@ def scrape_team_data(team, seasons):
 
     print(f"Scraping data for {team.upper()} from {seasons[0]}-{seasons[-1]}...")
 
-    stats = [
-        'FG', 'FGA', 'FG%', 
-        '3P', '3PA', '3P%',
-        'FT', 'FTA', 'FT%',
-        'ORB', 'TRB', 'AST', 
-        'STL', 'BLK', 'TOV', 'PF'
-    ]
+    stats = Constants[stats]
     
     team_stats = {stat: f"Team_{stat}" for stat in stats}
     opp_stats = {stat + '.1': f"Opp_{stat}" for stat in stats}

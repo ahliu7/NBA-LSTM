@@ -1,21 +1,15 @@
 import pandas as pd
 import random
 import time
+from Constants import Constants
 
-teams = [
-    'atl', 'bos', 'brk', 'cho', 'chi', 'cle', 'dal', 'den', 'det', 'gsw', 'hou', 'ind', 'lac', 'lal', 'mem', 
-    'mia', 'mil', 'min', 'nop', 'nyk', 'okc', 'orl', 'phi', 'pho', 'por', 'sac', 'sas', 'tor', 'uta', 'was']
+teams = Constants['teams']
 len(teams)
 
 seasons = list(range(2019,2024))
 seasons
 
-stats = [
-    'FG', 'FGA', 'FG%', 
-    '3P', '3PA', '3P%',
-    'FT', 'FTA', 'FT%',
-    'ORB', 'TRB', 'AST', 
-    'STL', 'BLK', 'TOV', 'PF' ]
+stats = Constants[stats]
 
 team_stats = {stat: f"Team_{stat}" for stat in stats}
 opp_stats = {stat + '.1': f"Opp_{stat}" for stat in stats}
