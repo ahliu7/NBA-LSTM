@@ -9,7 +9,7 @@ len(teams)
 seasons = list(range(2019,2024))
 seasons
 
-stats = Constants[stats]
+stats = Constants['stats']
 
 team_stats = {stat: f"Team_{stat}" for stat in stats}
 opp_stats = {stat + '.1': f"Opp_{stat}" for stat in stats}
