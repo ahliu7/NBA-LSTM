@@ -1,8 +1,6 @@
-import numpy as np
 import pandas as pd
 import random
 import time
-from unidecode import unidecode
 
 teams = [
     'atl', 'bos', 'brk', 'cho', 'chi', 'cle', 'dal', 'den', 'det', 'gsw', 'hou', 'ind', 'lac', 'lal', 'mem', 

@@ -2,9 +2,9 @@ import torch
 import torch.nn as nn
 
 class NBA_LSTM(nn.Module):
-    def __init__(self, input_size, hidden_size, num_layers, output_size, dropout=0.2):
+    def __init__(self, input_size, hidden_size, output_size):
         super(NBA_LSTM, self).__init__()
-        self.lstm = nn.LSTM(input_size, hidden_size, num_layers, batch_first=True, dropout=dropout)
+        self.lstm = nn.LSTM(input_size, hidden_size, batch_first=True)
         self.fc = nn.Linear(hidden_size, output_size)
         self.sigmoid = nn.Sigmoid()
 
