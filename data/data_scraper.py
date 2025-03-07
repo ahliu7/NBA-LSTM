@@ -1,7 +1,9 @@
 import pandas as pd
 import random
 import time
-from Constants import Constants
+from config import Constants
+
+# Old data scraper, still works but not used in the project anymore
 
 teams = Constants['teams']
 len(teams)

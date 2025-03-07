@@ -1,6 +1,8 @@
-from Constants import Constants
-from NewScraper import scrape_team_data
-from Preprocess import preprocess_data, prepare_model_data, plot_team_performance
+from config import Constants
+from data.new_scraper import scrape_team_data
+from data.preprocess import preprocess_data
+from data.dataset import prepare_model_data
+from visualization.visualize import plot_team_performance
 
 if __name__ == "__main__":
 
@@ -26,10 +28,10 @@ if __name__ == "__main__":
     train_loader, val_loader, test_loader, scaler, input_size = prepare_model_data(processed_data)
     
     print(f"Data prepared for modeling:")
-    print(f"- Input size: {input_size}")
-    print(f"- Training batches: {len(train_loader)}")
-    print(f"- Validation batches: {len(val_loader)}")
-    print(f"- Test batches: {len(test_loader)}")
+    print(f"Input size: {input_size}")
+    print(f"Training batches: {len(train_loader)}")
+    print(f"Validation batches: {len(val_loader)}")
+    print(f"Test batches: {len(test_loader)}")
     
     # Next step would be to train the LSTM model using the data loaders
-    print("\nData is ready for model training. Import the LSTM model from the previous script to complete the workflow.")
+    print("Data ready for model training.")

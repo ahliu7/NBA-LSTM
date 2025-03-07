@@ -1,5 +1,4 @@
-
-# Constants
+# Global parameters
 Constants = { 
     'input_size': 8,
     'hidden_size': 64,

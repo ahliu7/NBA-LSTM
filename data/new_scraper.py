@@ -1,8 +1,7 @@
 import pandas as pd
 import time
 import random
-from Constants import Constants
-
+from config import Constants
 
 def scrape_team_data(team, seasons):
     """
