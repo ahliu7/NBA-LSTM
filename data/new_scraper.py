@@ -5,7 +5,7 @@ from config import Constants
 
 def scrape_team_data(team, seasons):
     """
-    Scrape game data for the specified team over specified seasons.
+    Scrape game data for the specified team over specified seasons
     
     Args:
         team (str): Three-letter team code (e.g., 'LAL' for Lakers)
