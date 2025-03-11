@@ -46,3 +46,39 @@ def plot_team_performance(df, team_name):
     plt.tight_layout()
     plt.savefig(f"{team_name.lower()}_performance.png")
     plt.show()
+
+
+def plot_training_history(train_losses, val_losses, train_accuracies, val_accuracies):
+    """
+    Plot training and validation loss and accuracy
+
+    Args:
+        train_losses (list): Training loss values for each epoch
+        val_losses (list): Validation loss values for each epoch
+        train_accuracies (list): Training accuracy values for each epoch
+        val_accuracies (list): Validation accuracy values for each epoch
+    """
+    
+    plt.figure(figsize=(12, 5))
+    
+    # Plot training and validation loss values
+    plt.subplot(1, 2, 1)
+    plt.plot(train_losses, label='Training Loss')
+    plt.plot(val_losses, label='Validation Loss')
+    plt.title('Loss Over Time')
+    plt.xlabel('Epochs')
+    plt.ylabel('Loss')
+    plt.legend()
+    
+    # Plot training and validation accuracy
+    plt.subplot(1, 2, 2)
+    plt.plot(train_accuracies, label='Training Accuracy')
+    plt.plot(val_accuracies, label='Validation Accuracy')
+    plt.title('Accuracy Over Time')
+    plt.xlabel('Epochs')
+    plt.ylabel('Accuracy')
+    plt.legend()
+    
+    # Plot
+    plt.tight_layout()
+    plt.show()
