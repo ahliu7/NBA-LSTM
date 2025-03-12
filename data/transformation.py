@@ -4,6 +4,7 @@ import torch
 from torch.utils.data import Dataset, DataLoader
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
+from config import Constants
 
 class GameSequenceDataset(Dataset):
     """Custome PyTorch Dataset for game sequences to better model time series data"""
@@ -19,7 +20,7 @@ class GameSequenceDataset(Dataset):
         return self.X[idx], self.y[idx]
 
 
-def create_sequences(data, sequence_length=5, target_col='Win'):
+def create_sequences(data, sequence_length, target_col='Win'):
     """
     Convert DataFrame to sequences for LSTM model
     
@@ -49,7 +50,7 @@ def create_sequences(data, sequence_length=5, target_col='Win'):
     return np.array(X), np.array(y)
 
 
-def prepare_model_data(processed_df, sequence_length=5, test_size=0.2, val_size=0.15):
+def prepare_model_data(processed_df, sequence_length, test_size, val_size):
     """
     Prepare data for LSTM model training
     
@@ -95,7 +96,7 @@ def prepare_model_data(processed_df, sequence_length=5, test_size=0.2, val_size=
     test_dataset = GameSequenceDataset(X_test, y_test)
     
     # Create dataloaders
-    batch_size = 32
+    batch_size = Constants['batch_size']
     train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
     val_loader = DataLoader(val_dataset, batch_size=batch_size)
     test_loader = DataLoader(test_dataset, batch_size=batch_size)
