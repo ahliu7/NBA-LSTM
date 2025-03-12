@@ -208,10 +208,10 @@ def save_model(model, scaler, input_size, test_accuracy, precision, recall, f1):
         'recall': recall, 
         'f1': f1, 
         'model_config': {
-            'hidden_size1': config.HIDDEN_SIZE_1,
-            'hidden_size2': config.HIDDEN_SIZE_2,
-            'num_layers': config.NUM_LAYERS,
-            'dropout': config.DROPOUT
+            'hidden_size1': Constants['hidden_size1'],
+            'hidden_size2': Constants['hidden_size2'],
+            'num_layers': Constants['num_layers'],
+            'dropout': Constants['dropout']
         }
     }
     
@@ -225,7 +225,7 @@ def save_model(model, scaler, input_size, test_accuracy, precision, recall, f1):
     print(f"Model saved to {model_path}")
     
     # Also save latest model for easier reference
-    latest_path = os.path.join(model_dir, f"{team_code}_model_latest.pt")
+    latest_path = os.path.join(model_dir, f"{team_code}_model_latest.pth")
     torch.save({
         'model_state_dict': model.state_dict(),
         'scaler': scaler,
@@ -233,4 +233,3 @@ def save_model(model, scaler, input_size, test_accuracy, precision, recall, f1):
     }, latest_path)
     
     print(f"Latest model saved to {latest_path}")
-    

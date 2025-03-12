@@ -25,11 +25,11 @@ if __name__ == "__main__":
     print(f"Processed data saved to {team_code}_processed_data.csv")
     
     # Visualize team performance
-    plot_team_performance(processed_data, team_name)
+    # plot_team_performance(processed_data, team_name)
     
     # Prepare data for modeling
-    sequence_length = Constants['squence_length']
-    test_size = Constants['tests_size']
+    sequence_length = Constants['sequence_length']
+    test_size = Constants['test_size']
     val_size = Constants['val_size']
     train_loader, val_loader, test_loader, scaler, input_size = prepare_model_data(processed_data, sequence_length, test_size, val_size)
     
