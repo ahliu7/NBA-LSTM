@@ -16,12 +16,12 @@ if __name__ == "__main__":
     
     # Scrape data
     team_data = scrape_team_data(team_code, seasons_to_scrape)
-    team_data.to_csv(f"{team_code}_raw_data.csv", index=False)
+    team_data.to_csv(f"data/datasets/{team_code}_raw_data.csv", index=False)
     print(f"Raw data saved to {team_code}_raw_data.csv")
 
     # Preprocess raw data
     processed_data = preprocess_data(team_data)
-    processed_data.to_csv(f"{team_code}_processed_data.csv", index=False)
+    processed_data.to_csv(f"data/datasets/{team_code}_processed_data.csv", index=False)
     print(f"Processed data saved to {team_code}_processed_data.csv")
     
     # Visualize team performance
