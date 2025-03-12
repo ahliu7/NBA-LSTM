@@ -2,8 +2,9 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from model.model import NBA_LSTM
+from utils import calculate_metrics
 
-def train_model(train_loader, val_loader, input_size, device, epochs=100, learning_rate=0.001, patience=10):
+def train_model(train_loader, val_loader, input_size, device, epochs, learning_rate, patience):
     """
     Train the LSTM model
 
@@ -12,9 +13,9 @@ def train_model(train_loader, val_loader, input_size, device, epochs=100, learni
         val_loader (DataLoader): PyTorch DataLoader containing validation data batches
         input_size (int): Number of input features for the LSTM model
         device (torch.device): Device to run the training on 
-        epochs (int): Number of training epochs. Defaults to 100.
-        learning_rate (float): Learning rate for the optimizer. Defaults to 0.001.
-        patience (int): Number of epochs training will be stopped after with no improvement. Defaults to 10.
+        epochs (int): Number of training epochs
+        learning_rate (float): Learning rate for the optimizer
+        patience (int): Number of epochs training will be stopped after with no improvement
     
     Returns:
         model (LSTMWinPredictor): The trained PyTorch model
@@ -41,7 +42,6 @@ def train_model(train_loader, val_loader, input_size, device, epochs=100, learni
     early_stop_counter = 0
     best_model_state = None
     
-    print("Training starts...")
     for epoch in range(epochs):
         model.train()
         train_loss = 0
@@ -157,7 +157,15 @@ def evaluate_model(model, test_loader, device):
             all_probabilities.extend(outputs.cpu().numpy())
             all_targets.extend(targets.cpu().numpy())
     
+    # Calculate accuracy, precision, recall, f1, confusion
     test_accuracy = test_correct / test_total
-    print(f'Test Accuracy: {test_accuracy:.4f}')
+    predictions = [1 if p > 0.5 else 0 for p in all_probabilities]
+    precision, recall, f1, confusion = calculate_metrics(all_targets, predictions)
+
+    print(f"Test Accuracy: {test_accuracy:.4f}")
+    print(f"Precision: {precision:.4f}")
+    print(f"Recall: {recall:.4f}")
+    print(f"F1 Score: {f1:.4f}")
+    print(f"Confusion Matrix:\n{confusion}")
     
-    return test_accuracy, all_probabilities, all_targets
+    return test_accuracy, precision, recall, f1, all_probabilities, all_targets
