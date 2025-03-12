@@ -15,6 +15,7 @@ def calculate_metrics(y_true, y_pred):
         f1 (float): F1 score 
         confusion (array): 2x2 confusion matrix 
     """
+
     # Convert inputs to numpy arrays
     y_true = np.array(y_true).flatten()
     y_pred = np.array(y_pred).flatten()
