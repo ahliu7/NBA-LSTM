@@ -1,8 +1,12 @@
 import torch
 import torch.nn as nn
 import torch.optim as optim
+import os
+import config
+from datetime import datetime
 from model.model import NBA_LSTM
 from utils import calculate_metrics
+from config import Constants
 
 def train_model(train_loader, val_loader, input_size, device, epochs, learning_rate, patience):
     """
@@ -169,3 +173,64 @@ def evaluate_model(model, test_loader, device):
     print(f"Confusion Matrix:\n{confusion}")
     
     return test_accuracy, precision, recall, f1, all_probabilities, all_targets
+
+
+def save_model(model, scaler, input_size, test_accuracy, precision, recall, f1):
+    """
+    Save the trained model, scaler and metadata.
+    
+    Args:
+        model (LSTMWinPredictor): Trained model to save
+        scaler: Feature scaler used during preprocessing
+        input_size (int, optional): Input size of the model
+        test_accuracy (float): Model accuracy 
+        precision (float): Precision metric
+        recall (float): Recall metric
+        f1 (flaot): F1 score
+    """
+    
+    # Where to save model
+    model_dir = 'model/saved'
+    os.makedirs(model_dir, exist_ok=True)
+    
+    # Create model save path
+    team_code = Constants['team'][0]
+    seasons = Constants['seasons']
+    model_path = os.path.join(model_dir, f"{team_code}_model_{seasons[0]}_to_{seasons[1]}.pth")
+    
+    # Prepare metadata
+    metadata = {
+        'team_code': team_code,
+        'saved_time': datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        'input_size': input_size,
+        'test_accuracy': test_accuracy, 
+        'precision': precision, 
+        'recall': recall, 
+        'f1': f1, 
+        'model_config': {
+            'hidden_size1': config.HIDDEN_SIZE_1,
+            'hidden_size2': config.HIDDEN_SIZE_2,
+            'num_layers': config.NUM_LAYERS,
+            'dropout': config.DROPOUT
+        }
+    }
+    
+    # Save model, scaler, and metadata
+    torch.save({
+        'model_state': model.state_dict(),
+        'scaler': scaler,
+        'metadata': metadata
+    }, model_path)
+    
+    print(f"Model saved to {model_path}")
+    
+    # Also save latest model for easier reference
+    latest_path = os.path.join(model_dir, f"{team_code}_model_latest.pt")
+    torch.save({
+        'model_state_dict': model.state_dict(),
+        'scaler': scaler,
+        'metadata': metadata
+    }, latest_path)
+    
+    print(f"Latest model saved to {latest_path}")
+    
