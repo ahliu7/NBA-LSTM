@@ -65,6 +65,72 @@ The model trains using binary cross-entropy loss, with scheduled evaluation on a
 
 For predicting upcoming games, the model analyzes the team's most recent game sequence and outputs a win probability. This process requires only historical data, making it suitable for real-time prediction.
 
+## Usage Instructions
+
+### Configuration
+
+All model and data parameters are stored in `config.py`. The main parameters you'll want to modify are:
+
+```python
+Constants = {
+    # Target team and seasons
+    'team': ('den', 'Nuggets'),  # Team code and name
+    'seasons': (2022, 2025),     # Range of seasons to scrape (inclusive)
+
+    # LSTM parameters
+    'sequence_length': 3,        # Number of games in each sequence
+    'hidden_size1': 64,          # Size of first LSTM layer
+    'hidden_size2': 32,          # Size of second LSTM layer
+    'dropout': 0.5,              # Dropout rate for regularization
+
+    # Training parameters
+    'epochs': 500,               # Maximum number of training epochs
+    'learning_rate': 0.0001,     # Learning rate for optimizer
+    'patience': 50               # Early stopping patience
+}
+```
+
+### Training a Model
+
+To train a model for a specific team:
+
+1. Edit `config.py` to set your desired team and seasons:
+
+   ```python
+   'team': ('lal', 'Lakers'),  # Change to your team of interest
+   'seasons': (2020, 2023),    # Change to desired seasons
+   ```
+
+2. Run the training script:
+   ```bash
+   python main.py
+   ```
+
+This will:
+
+- Scrape data for the specified team and seasons
+- Preprocess the data and create sequences
+- Train the LSTM model with early stopping
+- Evaluate the model on test data
+- Save the trained model to `model/saved/{team_code}_model_latest.pth`
+
+### Making Predictions
+
+To predict if a team will win their next game:
+
+1. Edit `config.py` to set your desired team and seasons:
+
+   ```python
+   'team': ('lal', 'Lakers'),  # Change to your team of interest
+   'seasons': (2020, 2023),    # Change to desired seasons
+   ```
+
+2. Ensure you have a trained model for that specific team
+3. Run the prediction script:
+   ```bash
+   python predict.py
+   ```
+
 ## Model Performance
 
 The model achieves:
